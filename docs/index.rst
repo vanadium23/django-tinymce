@@ -24,7 +24,7 @@ Note that django-tinymce and TinyMCE licenses are compatible (although different
 .. _Django: http://www.djangoproject.com/
 .. _TinyMCE: http://tinymce.moxiecode.com/
 .. _`django-staticfiles`: http://pypi.python.org/pypi/django-staticfiles/
-.. _`django-filebrowser`: http://code.google.com/p/django-filebrowser/
+.. _`django-filebrowser`: https://github.com/sehmaschine/django-filebrowser/
 .. _`MIT License`: http://www.opensource.org/licenses/mit-license.php
 .. _`its own license`: http://tinymce.moxiecode.com/license.php
 
