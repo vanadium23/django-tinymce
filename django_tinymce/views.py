@@ -7,7 +7,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.utils.translation import ugettext as _
-from tinymce.compressor import gzip_compressor
+from django_tinymce.compressor import gzip_compressor
 import json
 try:
     from django.views.decorators.csrf import csrf_exempt

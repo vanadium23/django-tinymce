@@ -7,7 +7,7 @@ http://code.djangoproject.com/wiki/CustomWidgetsTinyMCE
 """
 from __future__ import unicode_literals
 
-import tinymce.settings
+import django_tinymce.settings
 from django import forms
 from django.conf import settings
 from django.contrib.admin import widgets as admin_widgets
@@ -59,9 +59,9 @@ class TinyMCE(forms.Textarea):
         self.content_language = content_language
 
     def get_mce_config(self, attrs):
-        mce_config = tinymce.settings.DEFAULT_CONFIG.copy()
+        mce_config = django_tinymce.settings.DEFAULT_CONFIG.copy()
         mce_config.update(get_language_config(self.content_language))
-        if tinymce.settings.USE_FILEBROWSER:
+        if django_tinymce.settings.USE_FILEBROWSER:
             mce_config['file_browser_callback'] = "djangoFileBrowser"
         mce_config.update(self.mce_attrs)
         if mce_config['mode'] == 'exact':
@@ -91,7 +91,7 @@ class TinyMCE(forms.Textarea):
         assert 'id' in final_attrs, "TinyMCE widget attributes must contain 'id'"
         mce_config = self.get_mce_config(final_attrs)
         mce_json = self.get_mce_json(mce_config)
-        if tinymce.settings.USE_COMPRESSOR:
+        if django_tinymce.settings.USE_COMPRESSOR:
             compressor_config = {
                 'plugins': mce_config.get('plugins', ''),
                 'themes': mce_config.get('theme', 'advanced'),
@@ -105,11 +105,11 @@ class TinyMCE(forms.Textarea):
         return mark_safe('\n'.join(html))
 
     def _media(self):
-        if tinymce.settings.USE_COMPRESSOR:
+        if django_tinymce.settings.USE_COMPRESSOR:
             js = [reverse('tinymce-compressor')]
         else:
-            js = [tinymce.settings.JS_URL]
-        if tinymce.settings.USE_FILEBROWSER:
+            js = [django_tinymce.settings.JS_URL]
+        if django_tinymce.settings.USE_FILEBROWSER:
             js.append(reverse('tinymce-filebrowser'))
         js.append('django_tinymce/init_tinymce.js')
         return forms.Media(js=js)
@@ -150,7 +150,7 @@ def get_language_config(content_language=None):
     else:
         config['directionality'] = 'ltr'
 
-    if tinymce.settings.USE_SPELLCHECKER:
+    if django_tinymce.settings.USE_SPELLCHECKER:
         config['spellchecker_rpc_url'] = reverse('tinymce.views.spell_check')
 
     return config

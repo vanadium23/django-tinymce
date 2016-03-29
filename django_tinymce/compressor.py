@@ -21,7 +21,7 @@ from django.utils.text import compress_string
 from django.utils.cache import patch_vary_headers, patch_response_headers
 from django.utils.encoding import smart_text
 
-import tinymce.settings
+import django_tinymce.settings
 
 safe_filename_re = re.compile('^[a-zA-Z][a-zA-Z0-9_/-]*$')
 
@@ -32,7 +32,7 @@ def get_file_contents(filename):
         from django.contrib.staticfiles import finders
         file_path = finders.find(os.path.join('tiny_mce', filename))
     else:
-        file_path = os.path.join(tinymce.settings.JS_ROOT, filename)
+        file_path = os.path.join(django_tinymce.settings.JS_ROOT, filename)
 
     try:
         f = open(file_path)
@@ -64,7 +64,7 @@ def gzip_compressor(request):
 
     if not isJS:
         response.write(render_to_string('tinymce/tiny_mce_gzip.js', {
-            'base_url': tinymce.settings.JS_BASE_URL,
+            'base_url': django_tinymce.settings.JS_BASE_URL,
         }, context_instance=RequestContext(request)))
         return response
 
@@ -94,7 +94,7 @@ def gzip_compressor(request):
                 return response
 
     tinyMCEPreInit = {
-        'base': tinymce.settings.JS_BASE_URL,
+        'base': django_tinymce.settings.JS_BASE_URL,
         'suffix': '',
     }
     content.append('var tinyMCEPreInit={!s};'.format(
